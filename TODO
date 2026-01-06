@@ -1,0 +1,37 @@
+I have stored data in adjacency list. to render, may need to use BFS or DFS algorithm (even though we aren't searching for anything, we can still traverse the entire graph)
+
+
+SPRING RENDERING: we don't want to draw the same spring twice between the same two nodes: this is an undirected graph.
+recursive spring drawing algorithm
+
+[explored,frontier,unseen]
+
+def render_springs(self, offset):
+    base case: if has no unseen neighbors: return
+X
+
+OR: only draw the spring from self to neighbor if that neighbor's ID is greater than self id
+
+
+DELETION OF NODE: 
+- reassign node keys NOT by size of graph (n nodes). Instead, keep, in data, a list of all keys (or just use the node_data), in numerical order (automatically sorted as new nodes are created: insert into correct location on creation).
+----------------
+Node tracing (border cycle for polygon fill): BFS or DFS: [BFS],[explored,frontier,unseen]
+
+- may be possible to have "two softbodies in one" with this approach
+- in a cycle, every node touches 2 other nodes.
+- border nodes may form 2 connected components through node adjacency
+- this way, does not depend on node ID 
+
+algorithm pseudocode: 
+for each BORDER NODE:
+    find how many connected components exist (n number)
+
+    OR
+
+while border nodes copy is not empty
+
+for n times: (does not run if n=0)
+    find a node in one unique/untouched connected component (remove that node from list, so that after 1 iteration, all nodes from that sub-graph are gone from the list)
+    trace
+    end current iteration when end node == start node

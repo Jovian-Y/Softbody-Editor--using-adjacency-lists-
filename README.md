@@ -1,0 +1,30 @@
+# Softbody Editor
+A simple softbody editor featuring a softbody object system composed of a network of nodes and springs, allowing simulation of dynamic game entities with realistic deformation.
+
+## NEW Features and Improvements
+- Data storage: from edge-list representation to adjacency lists, so that connected components can be identified (with BFS). This allows for multiple individual polygons to be traced within a single softbody data file. Also allows for border node creation in editor in any order, as opposed to order dependent polygon tracing previously: "zigzag" filling is no longer an issue.
+
+## Features
+- Softbody editor.
+- Softbody data saving in JSON format.
+- SoftBody object: consists of configuration(s) of connected nodes and springs.
+- Can mimic "soft body" behavior through creating a sparse network of nodes and springs. e.g., cloth, vine, spider web, net, hanging mobile.
+- Can mimic stiff "rigid body" behavior through triangular node connections or compact node connections. e.g., ball, bridge.
+- Wind, gravity, other "external forces": use WASD to apply these forces.
+- Visual representation of springs, nodes, and solid color fills (toggle on/off in code).
+- Grid lines.
+
+## Instructions For Use (softbody_editor.py)
+- To make new softbody data, in [softbody_editor.py], choose a file name. If nonexistent, a new JSON file will be created. If the file name exists already, running the editor will load in the already existing data.
+- WASD or arrow keys to move the camera.
+- 1: action = node. Click left mouse button to place a node at cursor's grid position. Nodes can be border and/or fixed (or none).
+- 2: action = spring. Drag mouse cursor between two grid positions with existing nodes to create a spring connecting the two nodes.
+- 3: toggle fixed on/off. Nodes placed when fixed is true will be labeled with "F" (fixed).
+  - Fixed nodes are not affected by wind, gravity, or any other external force. Remains in the position in which they are initialized.
+- 4: toggle border on/off. Nodes placed when border is true will be labeled with "B" (border).
+
+- x: delete all springs.
+- p: save current map.
+
+[IMPORTANT]: For filled polygons, All BORDER NODES must be a member of a closed loop. The start and end node does not matter, as long as it forms a closed loop connected by springs.
+[IMPORTANT]: To minimize rendering errors, do not DIRECTLY connect two BORDER nodes from different connected components with a spring. If they must be connected, create an intermediate NON-BORDER node.
