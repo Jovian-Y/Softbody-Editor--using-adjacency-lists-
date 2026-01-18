@@ -3,6 +3,9 @@ import math, json
 
 # Node class
 class Node:
+    # friction: horizontal and vertical movement are multiplied by friction. A lower friction will restrict movement. Friction should not exceed 1, or node velocities will increase infinitely.
+    friction = 0.99
+    mass = 1
     def __init__(self, render_surf, x, y, gridpos, fixed, border, id):
         self.render_surf = render_surf
         # (x,y) GRID positions. Actual pixel positions based on the assigned spacing in the SoftBody object it is part of.
@@ -19,23 +22,19 @@ class Node:
         
         # integer value
         self.id = id 
-        
-        # friction: horizontal and vertical movement are multiplied by friction. A lower friction will restrict movement. Friction should not exceed 1, or node velocities will increase infinitely.
-        self.friction = 0.99
-        self.mass = 1
+
         self.vx = 0
         self.vy = 0
 
-    # draw the node (circle) and fill with color (white)
-    def render(self): # draw a circle
+    def render(self):
         color = (255,255,255)
         pygame.draw.circle(self.render_surf, color, (self.x, self.y), 2)
 
     def apply_force(self, fx, fy):
-        self.vx += fx/self.mass
-        self.vy += fy/self.mass
+        self.vx += fx/Node.mass
+        self.vy += fy/Node.mass
 
-    # updates node velocitite as a response to force, and positions as a result.
+    # updates node velocity as a response to force, and positions as a result.
     def update(self, wind, gravity):
         if self.fixed:
             return
@@ -45,8 +44,8 @@ class Node:
         # wind. take sin(wind + self.x/100) so softbodies do not "sway" in the wind in unison.
         self.vx += 0.1*math.sin(wind+self.x/200)
         # friction
-        self.vx *= self.friction
-        self.vy *= self.friction
+        self.vx *= Node.friction
+        self.vy *= Node.friction
 
         # update current node positions
         self.x += self.vx
@@ -55,7 +54,6 @@ class Node:
 # Spring class: connects Node objects.
 class Spring:
     k = 0.5 # spring constant
-    damping = 0
     def __init__(self, render_surf, node1, node2, length):
         self.render_surf = render_surf
         # A spring connects two nodes.
@@ -74,22 +72,17 @@ class Spring:
         
         # Hooke's law : F = -k*x
         difference = distance-self.length
-        forceX = (dx/distance)*difference*self.k
-        forceY = (dy/distance)*difference*self.k
-
-        # spring damping along velocity
-        if self.damping > 0:
-            forceX -= self.damping * (self.node1.vx - self.node2.vx)
-            forceY -= self.damping * (self.node1.vy - self.node2.vy)
+        forceX = (dx/distance)*difference*Spring.k
+        forceY = (dy/distance)*difference*Spring.k
 
         # Apply forces to nodes
         self.node1.apply_force(forceX, forceY)
         self.node2.apply_force(-forceX, -forceY)
 
-    # display spring
     def render(self, color):
         pygame.draw.line(self.render_surf, color, (self.node1.x, self.node1.y), (self.node2.x, self.node2.y), self.linewidth)
 
+# "wrapper" for pygame polygon object
 class Polygon:
     def __init__(self):
         self.nodes = [] # list of Node objects
@@ -112,11 +105,9 @@ class Polygon:
 class SoftBody:
     def __init__(self, render_surf, pos, spacing, color, directory):
         self.render_surf = render_surf
-        # reference x,y pixel position on window.
         self.x, self.y = pos[0], pos[1]
         # spacing between nodes: for different sized (but equally proportioned) entities
         self.spacing = spacing
-        # color of the springs and polygon fill.
         self.color = color
         # file location of SoftBody data.
         self.directory = directory
@@ -148,7 +139,7 @@ class SoftBody:
         for i in self.adjacency_list:
             id_list = self.adjacency_list[i]['adjacency']
             for node_id in id_list:
-                if node_id > int(i): # so that springs are not created and drawn twice.
+                if int(node_id) > int(i): # so that springs are not created and drawn twice.
                     node1 = self.nodes[str(i)]
                     node2 = self.nodes[str(node_id)]
                     self.springs.append(Spring(
@@ -185,11 +176,10 @@ class SoftBody:
         for p in self.polygons:
             p.fill(self.render_surf, self.color)
 
-    # draw SoftBody's springs
     def render_spring(self):
         for spring in self.springs:
             spring.render(self.color)
-    # draw SoftBody's nodes
+
     def render_node(self):
         for i in self.nodes:
             node = self.nodes[i]

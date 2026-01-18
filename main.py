@@ -2,6 +2,7 @@ import sys
 import pygame
 from pygame.locals import *
 
+# switch between force based springs and distance based spring physics here.
 #from softbody_force_based import SoftBody
 from softbody_position_based import SoftBody
 

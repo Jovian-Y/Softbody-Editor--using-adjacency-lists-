@@ -46,7 +46,6 @@ class Grid:
         vertical_end = math.ceil(view_right/self.unit_length)
         for i in range(vertical_start, vertical_end):
             x_pos = i*self.unit_length - self.editor.scroll[0]
-            # draw only if within display bounds
             pygame.draw.line(display, (100,100,100), (x_pos, 0), (x_pos, display.get_height()))
 
         # horizontal lines: y = m*unit_length
@@ -54,7 +53,6 @@ class Grid:
         horizontal_end = math.ceil(view_bottom/self.unit_length)
         for i in range(horizontal_start, horizontal_end):
             y_pos = i*self.unit_length - self.editor.scroll[1]
-            # draw only if within display bounds
             pygame.draw.line(display, (50,50,50), (0, y_pos), (display.get_width(), y_pos))
 
 # Editor class
@@ -67,7 +65,6 @@ class Editor:
         self.right_clicking = False
         self.prev_left_clicking = self.left_clicking
         self.mouse_grid_pos = [0,0]
-
         self.hold_spring = False
         
         # conditions
@@ -83,13 +80,10 @@ class Editor:
         # grid size, Grid
         self.tile_size = 24 
         self.grid = Grid(self.tile_size, self)
-
         # text
         self.font = pygame.font.Font(None, 25)
-
         # scroll: controlled by WASD or arrow keys
         self.scroll = [0,0] 
-
         # used for connecting two nodes with a spring.
         self.connect = [None, None]
 
@@ -179,7 +173,7 @@ class Editor:
         for i in self.adjacency_list:
             id_list = self.adjacency_list[i]['adjacency']
             for node_id in id_list:
-                if node_id > int(i): # prevents duplicate springs
+                #if int(node_id) > int(i): # prevents duplicate springs
                     node1_pos = self.node_data[str(i)]['pos']
                     node2_pos = self.node_data[str(node_id)]['pos']
                     pygame.draw.line(display, (150,100,255), (self.tile_size*node1_pos[0]-offset[0], self.tile_size*node1_pos[1]-offset[1]), (self.tile_size*node2_pos[0]-offset[0], self.tile_size*node2_pos[1]-offset[1]), 2)
@@ -203,22 +197,21 @@ class Editor:
     # removing nodes            
     def remove_node(self):
         if self.right_clicking and self.action == 'node':
-            delete_id = None 
+            delete_id = None  # string
             for i in self.node_data:
                 if self.node_data[i]['pos'] == self.mouse_grid_pos:
                     delete_id = i
                     break
-
             if delete_id != None:
                 self.has_node.remove(self.node_data[delete_id]['pos'])
                 del self.node_data[delete_id]
                 del self.adjacency_list[delete_id]
                 # also delete occurences in other lists
-                delete_id_int = int(delete_id)
                 for i in self.adjacency_list:
                     node_ids = self.adjacency_list[i]["adjacency"]
-                    if delete_id_int in node_ids:
-                        node_ids.remove(delete_id_int)
+                    if delete_id in node_ids:
+                        node_ids.remove(delete_id)
+
     # create a spring between two nodes
     def add_spring(self):
         for pos in self.node_data:
@@ -264,8 +257,8 @@ class Editor:
             pygame.draw.line(display, (255,0,0), (max(2, 0-self.scroll[0]),screen.get_height()-self.scroll[1]), (max(2, 0-self.scroll[0]), 0-self.scroll[1]), 1)
 
             # render nodes and springs
-            self.render_springs([self.scroll[0]-12, self.scroll[1]-12])
-            self.render_nodes([self.scroll[0]-12, self.scroll[1]-12])
+            self.render_springs([self.scroll[0]-self.grid.unit_length/2, self.scroll[1]-self.grid.unit_length/2])
+            self.render_nodes([self.scroll[0]-self.grid.unit_length/2, self.scroll[1]-self.grid.unit_length/2])
 
             # mouse pos and grid pos circles         
             #pygame.draw.circle(display, (0,0,255), mouse_coords, 5)
@@ -280,10 +273,9 @@ class Editor:
             display.blit(self.font.render(f"3: fixed: {str(self.is_fixed)}", False, (255, 0, 0)), (10,30))
             display.blit(self.font.render(f"4: border: {str(self.is_border)}", False, (0, 255, 0)), (10,50))
             display.blit(self.font.render(f"coordiantes: {str(self.mouse_grid_pos)}", False, (255,255,255)), (10,70))
-
+            #
             display.blit(self.font.render(file_name, False, (255,255,255)), (10,display.get_height() - 50))
             display.blit(self.font.render("save: p", False, (255,255,255)), (10,display.get_height() - 30))
-
 
 # node: adding and removing
             self.add_node()
@@ -307,10 +299,8 @@ class Editor:
                 if event.type == pygame.MOUSEBUTTONUP:
                     if event.button == 1:
                         self.left_clicking = False
-
                         for pos in self.node_data:
                             node = self.node_data[pos]
-
                             # on mousebutton UP, add spring to data
                             if self.hold_spring == True and self.action == 'spring' and (self.mouse_grid_pos == node['pos']):
                                 self.connect[1] = node['id']
@@ -322,7 +312,6 @@ class Editor:
                                     self.adjacency_list[a]['adjacency'].append(b)
                                 if a not in self.adjacency_list[b]['adjacency']:
                                     self.adjacency_list[b]['adjacency'].append(a)
-    
                                 # reset
                                 self.connect = [None, None]
                                 self.hold_spring = False
