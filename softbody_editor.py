@@ -16,13 +16,14 @@ aspect_ratio = display_width / display_height
 # internal game resolution
 display_mode = (int(aspect_ratio * 360), 360)
 display = pygame.Surface(display_mode)
-pygame.display.set_caption("SOFTBODY EDITOR")
+pygame.display.set_caption("SOFTBODY EDITOR (using adjacency list)")
 
 screen_mode = (int(aspect_ratio * display_height / 2), int(display_height / 2))
 screen = pygame.display.set_mode(screen_mode, pygame.RESIZABLE)
 
 # ----------------- FILE PATH ----------------- #
-file_path = "softbody_data/randomplacementtest.json"
+file_name = "cloth3"
+file_path = f"softbody_data/{file_name}.json"
 
 # Grid class: creating and updating a Grid object will render a grid onto the display.
 class Grid:
@@ -40,7 +41,7 @@ class Grid:
         view_bottom = self.editor.scroll[1] + display.get_height()
 
         # integer ranges of grid lines
-        # vertical lines: x = k * unit_length
+        # vertical lines: x = k*unit_length
         vertical_start = math.floor(view_left/self.unit_length)
         vertical_end = math.ceil(view_right/self.unit_length)
         for i in range(vertical_start, vertical_end):
@@ -48,7 +49,7 @@ class Grid:
             # draw only if within display bounds
             pygame.draw.line(display, (100,100,100), (x_pos, 0), (x_pos, display.get_height()))
 
-        # horizontal lines: y = m * unit_length
+        # horizontal lines: y = m*unit_length
         horizontal_start = math.floor(view_top/self.unit_length)
         horizontal_end = math.ceil(view_bottom/self.unit_length)
         for i in range(horizontal_start, horizontal_end):
@@ -98,10 +99,47 @@ class Editor:
             "adjacency_list": {}
         }
 
+        self.load_data()
+        
+        ###
+        # identify next unique key
+        largest = 0
+        for i in self.node_data:
+            node = self.node_data[i]
+            if node['id'] > largest:
+                largest = node['id']
+        self.new_node_id = largest + 1
+
+        # all grid coordinates that are already occupied
+        self.has_node = []
+        for i in self.node_data:
+            self.has_node.append(self.node_data[i]['pos'])
+        ###
+
+    # dumping current map of nodes and springs (and their states) into JSON file.
+    def save(self, path):
+        with open(path, "w") as f:
+            json.dump(
+                {
+                    "node_data": self.node_data,
+                    "adjacency_list": self.adjacency_list
+                },
+                f,
+                indent=2
+            )
+
+    # load in existing SoftBody JSON data
+    def parse_saved_data(self, path):
+        with open(path, 'r') as f:
+            softbody_data = json.load(f)
+        self.node_data = softbody_data['node_data']
+        self.adjacency_list = softbody_data['adjacency_list']
+
+    def load_data(self):
         # load in data if path already exists
         if os.path.exists(file_path):
             try:
-                self.load(file_path)
+                self.parse_saved_data(file_path)
             except Exception as e:
                 print(f"Failed to load {file_path}: {e}")
                 self.node_data = {}
@@ -118,55 +156,12 @@ class Editor:
             print(f"{file_path} did not exist: created with template data.")
             # load the newly created file so attributes are initialized
             try:
-                self.load(file_path)
+                self.parse_saved_data(file_path)
 
             except Exception as e:
                 print(f"Failed to load newly created {file_path}: {e}")
                 self.node_data = {}
                 self.adjacency_list = {}
-
-        # identify next unique key
-        largest = 0
-        for i in self.node_data:
-            node = self.node_data[i]
-            if node['id'] > largest:
-                largest = node['id']
-        self.new_node_id = largest + 1
-
-        # all grid coordinates that are already occupied
-        self.has_node = []
-        for i in self.node_data:
-            self.has_node.append(self.node_data[i]['pos'])
-
-    # dumping current map of nodes and springs (and their states) into JSON file.
-    def save(self, path):
-        with open(path, "w") as f:
-            json.dump(
-                {
-                    "node_data": self.node_data,
-                    "adjacency_list": self.adjacency_list
-                },
-                f,
-                indent=2
-            )
-
-    # load in existing SoftBody JSON data
-    def load(self, path):
-        f = open(path, 'r')
-        softbody_data = json.load(f)
-        f.close()
-        self.node_data = softbody_data['node_data']
-        self.adjacency_list = softbody_data['adjacency_list']
-
-    # render all springs: use adjacency
-    def render_springs(self, offset):
-        for i in self.adjacency_list:
-            id_list = self.adjacency_list[i]['adjacency']
-            for node_id in id_list:
-                if node_id > int(i):
-                    node1_pos = self.node_data[str(i)]['pos']
-                    node2_pos = self.node_data[str(node_id)]['pos']
-                    pygame.draw.line(display, (150,100,255), (self.tile_size*node1_pos[0]-offset[0], self.tile_size*node1_pos[1]-offset[1]), (self.tile_size*node2_pos[0]-offset[0], self.tile_size*node2_pos[1]-offset[1]), 2)
 
     # render all (onscreen) nodes
     def render_nodes(self, offset):
@@ -179,8 +174,18 @@ class Editor:
             if node['border'] == True:
                 display.blit(self.font.render("B", False, (0, 255, 0)), (self.tile_size*node['pos'][0]-offset[0]+6,self.tile_size*node['pos'][1]-offset[1]))
 
+    # render all springs: use adjacency
+    def render_springs(self, offset):
+        for i in self.adjacency_list:
+            id_list = self.adjacency_list[i]['adjacency']
+            for node_id in id_list:
+                if node_id > int(i): # prevents duplicate springs
+                    node1_pos = self.node_data[str(i)]['pos']
+                    node2_pos = self.node_data[str(node_id)]['pos']
+                    pygame.draw.line(display, (150,100,255), (self.tile_size*node1_pos[0]-offset[0], self.tile_size*node1_pos[1]-offset[1]), (self.tile_size*node2_pos[0]-offset[0], self.tile_size*node2_pos[1]-offset[1]), 2)
+
+    # adding nodes
     def add_node(self):
-        # adding nodes
         if self.left_clicking and not self.prev_left_clicking:
             if self.action == 'node' and self.mouse_grid_pos not in self.has_node:
                 self.node_data[str(self.new_node_id)] = {
@@ -195,8 +200,8 @@ class Editor:
                 self.new_node_id += 1
                 self.has_node.append(self.mouse_grid_pos)
 
+    # removing nodes            
     def remove_node(self):
-        # removing nodes            
         if self.right_clicking and self.action == 'node':
             delete_id = None 
             for i in self.node_data:
@@ -214,7 +219,7 @@ class Editor:
                     node_ids = self.adjacency_list[i]["adjacency"]
                     if delete_id_int in node_ids:
                         node_ids.remove(delete_id_int)
-
+    # create a spring between two nodes
     def add_spring(self):
         for pos in self.node_data:
             node = self.node_data[pos]
@@ -271,15 +276,18 @@ class Editor:
             #pygame.draw.line(display, (255,255,255), (mouse_coords[0], mouse_coords[1]), (0-self.scroll[0], 0-self.scroll[1]), 1)
 
             # rendering conditions (text)
-            display.blit(self.font.render(f"action: {self.action}", False, (255, 150, 100)), (10,10))
-            display.blit(self.font.render(f"fixed: {str(self.is_fixed)}", False, (255, 0, 0)), (10,30))
-            display.blit(self.font.render(f"border: {str(self.is_border)}", False, (0, 255, 0)), (10,50))
+            display.blit(self.font.render(f"1;2: action: {self.action}", False, (255, 150, 100)), (10,10))
+            display.blit(self.font.render(f"3: fixed: {str(self.is_fixed)}", False, (255, 0, 0)), (10,30))
+            display.blit(self.font.render(f"4: border: {str(self.is_border)}", False, (0, 255, 0)), (10,50))
             display.blit(self.font.render(f"coordiantes: {str(self.mouse_grid_pos)}", False, (255,255,255)), (10,70))
+
+            display.blit(self.font.render(file_name, False, (255,255,255)), (10,display.get_height() - 50))
+            display.blit(self.font.render("save: p", False, (255,255,255)), (10,display.get_height() - 30))
+
 
 # node: adding and removing
             self.add_node()
             self.remove_node()
-
 # spring: add
             self.add_spring()
             
@@ -306,12 +314,15 @@ class Editor:
                             # on mousebutton UP, add spring to data
                             if self.hold_spring == True and self.action == 'spring' and (self.mouse_grid_pos == node['pos']):
                                 self.connect[1] = node['id']
-
-                                print(self.adjacency_list)
-
-                                self.adjacency_list[str(self.connect[0])]['adjacency'].append(self.connect[1])
-                                self.adjacency_list[str(self.connect[1])]['adjacency'].append(self.connect[0])
-                                
+                                #print(self.adjacency_list)
+                                # cannot easily make adjacency lists sets instead: we don't want duplicate items in list, but JSON does not have sets. Just check if duplicate instead.
+                                a = str(self.connect[0])
+                                b = str(self.connect[1])
+                                if b not in self.adjacency_list[a]['adjacency']:
+                                    self.adjacency_list[a]['adjacency'].append(b)
+                                if a not in self.adjacency_list[b]['adjacency']:
+                                    self.adjacency_list[b]['adjacency'].append(a)
+    
                                 # reset
                                 self.connect = [None, None]
                                 self.hold_spring = False
@@ -342,11 +353,6 @@ class Editor:
                             self.is_border = True
                         elif self.is_border == True:
                             self.is_border = False
-                    if event.key == pygame.K_x:
-                        self.springs={}
-                    if event.key == pygame.K_r:
-                        self.connect = [None, None]
-                        self.hold_spring = False
                         
                     # save data of current node and spring configuration
                     if event.key == pygame.K_p:

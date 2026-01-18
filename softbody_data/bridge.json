@@ -1,0 +1,464 @@
+{
+  "node_data": {
+    "2": {
+      "id": 2,
+      "pos": [
+        0,
+        3
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "3": {
+      "id": 3,
+      "pos": [
+        4,
+        3
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "4": {
+      "id": 4,
+      "pos": [
+        8,
+        3
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "5": {
+      "id": 5,
+      "pos": [
+        12,
+        3
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "6": {
+      "id": 6,
+      "pos": [
+        16,
+        3
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "7": {
+      "id": 7,
+      "pos": [
+        20,
+        3
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "8": {
+      "id": 8,
+      "pos": [
+        20,
+        4
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "9": {
+      "id": 9,
+      "pos": [
+        0,
+        4
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "10": {
+      "id": 10,
+      "pos": [
+        2,
+        0
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "11": {
+      "id": 11,
+      "pos": [
+        6,
+        0
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "12": {
+      "id": 12,
+      "pos": [
+        10,
+        0
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "13": {
+      "id": 13,
+      "pos": [
+        14,
+        0
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "14": {
+      "id": 14,
+      "pos": [
+        18,
+        0
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "15": {
+      "id": 15,
+      "pos": [
+        2,
+        4
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "16": {
+      "id": 16,
+      "pos": [
+        5,
+        4
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "17": {
+      "id": 17,
+      "pos": [
+        7,
+        4
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "18": {
+      "id": 18,
+      "pos": [
+        11,
+        4
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "19": {
+      "id": 19,
+      "pos": [
+        18,
+        4
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "20": {
+      "id": 20,
+      "pos": [
+        2,
+        6
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "21": {
+      "id": 21,
+      "pos": [
+        2,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "22": {
+      "id": 22,
+      "pos": [
+        5,
+        6
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "23": {
+      "id": 23,
+      "pos": [
+        7,
+        6
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "24": {
+      "id": 24,
+      "pos": [
+        7,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "25": {
+      "id": 25,
+      "pos": [
+        7,
+        10
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "26": {
+      "id": 26,
+      "pos": [
+        7,
+        12
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "27": {
+      "id": 27,
+      "pos": [
+        11,
+        6
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "28": {
+      "id": 28,
+      "pos": [
+        11,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "29": {
+      "id": 29,
+      "pos": [
+        11,
+        10
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "30": {
+      "id": 30,
+      "pos": [
+        18,
+        6
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "31": {
+      "id": 31,
+      "pos": [
+        18,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    }
+  },
+  "adjacency_list": {
+    "2": {
+      "adjacency": [
+        10,
+        9,
+        3
+      ]
+    },
+    "3": {
+      "adjacency": [
+        10,
+        11,
+        2,
+        4
+      ]
+    },
+    "4": {
+      "adjacency": [
+        11,
+        12,
+        3,
+        5
+      ]
+    },
+    "5": {
+      "adjacency": [
+        12,
+        13,
+        4,
+        6
+      ]
+    },
+    "6": {
+      "adjacency": [
+        13,
+        14,
+        5,
+        7
+      ]
+    },
+    "7": {
+      "adjacency": [
+        14,
+        8,
+        6
+      ]
+    },
+    "8": {
+      "adjacency": [
+        7,
+        9
+      ]
+    },
+    "9": {
+      "adjacency": [
+        8,
+        2
+      ]
+    },
+    "10": {
+      "adjacency": [
+        2,
+        3,
+        11
+      ]
+    },
+    "11": {
+      "adjacency": [
+        3,
+        4,
+        12,
+        10
+      ]
+    },
+    "12": {
+      "adjacency": [
+        4,
+        5,
+        13,
+        11
+      ]
+    },
+    "13": {
+      "adjacency": [
+        5,
+        6,
+        14,
+        12
+      ]
+    },
+    "14": {
+      "adjacency": [
+        6,
+        7,
+        13
+      ]
+    },
+    "15": {
+      "adjacency": [
+        20
+      ]
+    },
+    "16": {
+      "adjacency": [
+        22
+      ]
+    },
+    "17": {
+      "adjacency": [
+        23
+      ]
+    },
+    "18": {
+      "adjacency": [
+        27
+      ]
+    },
+    "19": {
+      "adjacency": [
+        30
+      ]
+    },
+    "20": {
+      "adjacency": [
+        15,
+        21
+      ]
+    },
+    "21": {
+      "adjacency": [
+        20
+      ]
+    },
+    "22": {
+      "adjacency": [
+        16
+      ]
+    },
+    "23": {
+      "adjacency": [
+        17,
+        24
+      ]
+    },
+    "24": {
+      "adjacency": [
+        23,
+        25
+      ]
+    },
+    "25": {
+      "adjacency": [
+        24,
+        26
+      ]
+    },
+    "26": {
+      "adjacency": [
+        25
+      ]
+    },
+    "27": {
+      "adjacency": [
+        18,
+        28
+      ]
+    },
+    "28": {
+      "adjacency": [
+        27,
+        29
+      ]
+    },
+    "29": {
+      "adjacency": [
+        28
+      ]
+    },
+    "30": {
+      "adjacency": [
+        19,
+        31
+      ]
+    },
+    "31": {
+      "adjacency": [
+        30
+      ]
+    }
+  }
+}

@@ -3,23 +3,23 @@
     "1": {
       "id": 1,
       "pos": [
-        3,
+        0,
         0
       ],
       "fixed": true,
       "border": false
     },
-    "2": {
-      "id": 2,
+    "21": {
+      "id": 21,
       "pos": [
-        3,
-        2
+        -3,
+        4
       ],
       "fixed": false,
-      "border": false
+      "border": true
     },
-    "3": {
-      "id": 3,
+    "22": {
+      "id": 22,
       "pos": [
         3,
         4
@@ -27,71 +27,143 @@
       "fixed": false,
       "border": true
     },
-    "4": {
-      "id": 4,
-      "pos": [
-        2,
-        5
-      ],
-      "fixed": false,
-      "border": true
-    },
-    "5": {
-      "id": 5,
-      "pos": [
-        3,
-        6
-      ],
-      "fixed": false,
-      "border": true
-    },
-    "6": {
-      "id": 6,
-      "pos": [
-        4,
-        5
-      ],
-      "fixed": false,
-      "border": true
-    },
-    "7": {
-      "id": 7,
+    "23": {
+      "id": 23,
       "pos": [
         3,
         5
       ],
       "fixed": false,
+      "border": true
+    },
+    "24": {
+      "id": 24,
+      "pos": [
+        1,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "26": {
+      "id": 26,
+      "pos": [
+        -3,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "28": {
+      "id": 28,
+      "pos": [
+        -1,
+        3
+      ],
+      "fixed": true,
       "border": false
     },
-    "8": {
-      "id": 8,
+    "29": {
+      "id": 29,
       "pos": [
-        3,
+        1,
+        3
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "31": {
+      "id": 31,
+      "pos": [
+        -4,
         8
       ],
       "fixed": false,
-      "border": false
+      "border": true
     },
-    "9": {
-      "id": 9,
+    "32": {
+      "id": 32,
       "pos": [
-        3,
-        10
+        -3,
+        9
       ],
       "fixed": false,
       "border": true
     },
-    "10": {
-      "id": 10,
+    "33": {
+      "id": 33,
+      "pos": [
+        -2,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "34": {
+      "id": 34,
+      "pos": [
+        -3,
+        12
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "37": {
+      "id": 37,
+      "pos": [
+        -4,
+        13
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "38": {
+      "id": 38,
+      "pos": [
+        -2,
+        13
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "39": {
+      "id": 39,
+      "pos": [
+        2,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "40": {
+      "id": 40,
+      "pos": [
+        2,
+        9
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "41": {
+      "id": 41,
       "pos": [
         4,
-        11
+        9
       ],
       "fixed": false,
       "border": true
     },
-    "11": {
-      "id": 11,
+    "42": {
+      "id": 42,
+      "pos": [
+        4,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "43": {
+      "id": 43,
       "pos": [
         3,
         12
@@ -99,19 +171,226 @@
       "fixed": false,
       "border": true
     },
-    "12": {
-      "id": 12,
+    "44": {
+      "id": 44,
       "pos": [
         2,
+        14
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "45": {
+      "id": 45,
+      "pos": [
+        4,
+        14
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "47": {
+      "id": 47,
+      "pos": [
+        -3,
+        7
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "48": {
+      "id": 48,
+      "pos": [
+        -3,
+        6
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "49": {
+      "id": 49,
+      "pos": [
+        -3,
+        10
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "50": {
+      "id": 50,
+      "pos": [
+        -3,
+        11
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "51": {
+      "id": 51,
+      "pos": [
+        3,
+        10
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "52": {
+      "id": 52,
+      "pos": [
+        3,
+        11
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "53": {
+      "id": 53,
+      "pos": [
+        3,
+        6
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "54": {
+      "id": 54,
+      "pos": [
+        3,
+        7
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "55": {
+      "id": 55,
+      "pos": [
+        3,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "56": {
+      "id": 56,
+      "pos": [
+        3,
+        9
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "57": {
+      "id": 57,
+      "pos": [
+        -3,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "58": {
+      "id": 58,
+      "pos": [
+        -1,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "59": {
+      "id": 59,
+      "pos": [
+        0,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "61": {
+      "id": 61,
+      "pos": [
+        0,
+        6
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "62": {
+      "id": 62,
+      "pos": [
+        0,
+        7
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "63": {
+      "id": 63,
+      "pos": [
+        0,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "64": {
+      "id": 64,
+      "pos": [
+        0,
+        9
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "66": {
+      "id": 66,
+      "pos": [
+        -1,
         11
       ],
       "fixed": false,
       "border": true
     },
-    "13": {
-      "id": 13,
+    "67": {
+      "id": 67,
       "pos": [
-        3,
+        -1,
+        12
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "68": {
+      "id": 68,
+      "pos": [
+        1,
+        12
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "71": {
+      "id": 71,
+      "pos": [
+        1,
+        11
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "72": {
+      "id": 72,
+      "pos": [
+        0,
+        10
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "74": {
+      "id": 74,
+      "pos": [
+        0,
         11
       ],
       "fixed": false,
@@ -121,94 +400,320 @@
   "adjacency_list": {
     "1": {
       "adjacency": [
-        2
+        21,
+        22,
+        28,
+        29
       ]
     },
-    "2": {
+    "21": {
       "adjacency": [
         1,
-        3
+        22,
+        26,
+        28
       ]
     },
-    "3": {
+    "22": {
       "adjacency": [
-        2,
-        4,
-        6,
-        7
+        21,
+        23,
+        1,
+        29
       ]
     },
-    "4": {
+    "23": {
       "adjacency": [
-        3,
-        5,
-        7
+        22,
+        24,
+        29,
+        53
       ]
     },
-    "5": {
+    "24": {
       "adjacency": [
-        4,
-        6,
-        7,
-        8
+        23,
+        29,
+        59
       ]
     },
-    "6": {
+    "26": {
       "adjacency": [
-        5,
-        3,
-        7
+        21,
+        28,
+        48,
+        58
       ]
     },
-    "7": {
+    "28": {
       "adjacency": [
-        3,
-        6,
-        5,
-        4
+        1,
+        29,
+        26,
+        21,
+        58,
+        59
       ]
     },
-    "8": {
+    "29": {
       "adjacency": [
-        5,
-        9
+        28,
+        1,
+        24,
+        23,
+        22,
+        59
       ]
     },
-    "9": {
+    "31": {
       "adjacency": [
-        8,
-        12,
-        10,
-        13
+        32,
+        47,
+        57
       ]
     },
-    "10": {
+    "32": {
       "adjacency": [
-        11,
-        9,
-        13
+        31,
+        33,
+        49,
+        57
       ]
     },
-    "11": {
+    "33": {
       "adjacency": [
-        12,
-        10,
-        13
+        47,
+        32,
+        57
       ]
     },
-    "12": {
+    "34": {
       "adjacency": [
-        9,
-        11,
-        13
+        50,
+        37,
+        38
       ]
     },
-    "13": {
+    "37": {
       "adjacency": [
-        9,
-        11,
-        12,
-        10
+        34,
+        38
+      ]
+    },
+    "38": {
+      "adjacency": [
+        37,
+        34
+      ]
+    },
+    "39": {
+      "adjacency": [
+        55,
+        40,
+        56
+      ]
+    },
+    "40": {
+      "adjacency": [
+        56,
+        39,
+        55
+      ]
+    },
+    "41": {
+      "adjacency": [
+        42,
+        56,
+        55
+      ]
+    },
+    "42": {
+      "adjacency": [
+        55,
+        41,
+        56
+      ]
+    },
+    "43": {
+      "adjacency": [
+        52,
+        44,
+        45
+      ]
+    },
+    "44": {
+      "adjacency": [
+        43,
+        45
+      ]
+    },
+    "45": {
+      "adjacency": [
+        44,
+        43
+      ]
+    },
+    "47": {
+      "adjacency": [
+        48,
+        31,
+        33,
+        57
+      ]
+    },
+    "48": {
+      "adjacency": [
+        26,
+        47
+      ]
+    },
+    "49": {
+      "adjacency": [
+        32,
+        50
+      ]
+    },
+    "50": {
+      "adjacency": [
+        49,
+        34
+      ]
+    },
+    "51": {
+      "adjacency": [
+        56,
+        52
+      ]
+    },
+    "52": {
+      "adjacency": [
+        51,
+        43
+      ]
+    },
+    "53": {
+      "adjacency": [
+        23,
+        54
+      ]
+    },
+    "54": {
+      "adjacency": [
+        53,
+        55
+      ]
+    },
+    "55": {
+      "adjacency": [
+        54,
+        39,
+        42,
+        56,
+        40,
+        41
+      ]
+    },
+    "56": {
+      "adjacency": [
+        41,
+        40,
+        55,
+        39,
+        42,
+        51
+      ]
+    },
+    "57": {
+      "adjacency": [
+        47,
+        32,
+        31,
+        33
+      ]
+    },
+    "58": {
+      "adjacency": [
+        26,
+        59,
+        28
+      ]
+    },
+    "59": {
+      "adjacency": [
+        58,
+        24,
+        28,
+        29,
+        61
+      ]
+    },
+    "61": {
+      "adjacency": [
+        59,
+        62
+      ]
+    },
+    "62": {
+      "adjacency": [
+        61,
+        63
+      ]
+    },
+    "63": {
+      "adjacency": [
+        62,
+        64
+      ]
+    },
+    "64": {
+      "adjacency": [
+        63,
+        72
+      ]
+    },
+    "66": {
+      "adjacency": [
+        67,
+        72,
+        74
+      ]
+    },
+    "67": {
+      "adjacency": [
+        66,
+        68,
+        74
+      ]
+    },
+    "68": {
+      "adjacency": [
+        67,
+        71,
+        74
+      ]
+    },
+    "71": {
+      "adjacency": [
+        72,
+        68,
+        74
+      ]
+    },
+    "72": {
+      "adjacency": [
+        66,
+        71,
+        64,
+        74
+      ]
+    },
+    "74": {
+      "adjacency": [
+        72,
+        66,
+        71,
+        67,
+        68
       ]
     }
   }

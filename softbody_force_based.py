@@ -3,13 +3,11 @@ import math, json
 
 # Node class
 class Node:
-    # universal gravity
-    gravity = 0.1
     def __init__(self, render_surf, x, y, gridpos, fixed, border, id):
         self.render_surf = render_surf
         # (x,y) GRID positions. Actual pixel positions based on the assigned spacing in the SoftBody object it is part of.
-        self.x = self.oldX = self.fixedX = x
-        self.y = self.oldY = self.fixedY = y
+        self.x = x
+        self.y = y
         self.gridpos = gridpos
 
         # fixed and border property
@@ -24,60 +22,69 @@ class Node:
         
         # friction: horizontal and vertical movement are multiplied by friction. A lower friction will restrict movement. Friction should not exceed 1, or node velocities will increase infinitely.
         self.friction = 0.99
+        self.mass = 1
+        self.vx = 0
+        self.vy = 0
 
     # draw the node (circle) and fill with color (white)
     def render(self): # draw a circle
         color = (255,255,255)
         pygame.draw.circle(self.render_surf, color, (self.x, self.y), 2)
 
-    # updates node velocitite as a response to force, and positions as a result.
-    def update(self, wind, force_x, force_y):
-        # if the node is not a fixed node
-        if (self.fixed == False):
-            # update node velocities and positions. 
-            vx = (self.x - self.oldX) * min(self.friction, 1)
-            vy = (self.y - self.oldY) * min(self.friction, 1)
-            
-            # previous x, y state.
-            self.oldX = self.x
-            self.oldY = self.y
+    def apply_force(self, fx, fy):
+        self.vx += fx/self.mass
+        self.vy += fy/self.mass
 
-            # update current node positions
-            # take sin(wind + self.x/100) so softbodies do not "sway" in the wind in unison. More natural appearance.
-            self.x += vx + abs(0.1*math.sin(wind+self.x/100)) + force_x
-            self.y += vy + self.gravity + force_y
+    # updates node velocitite as a response to force, and positions as a result.
+    def update(self, wind, gravity):
+        if self.fixed:
+            return
         
-        # if the nodes is a fixed node, fix its position at its point of initialization.
-        else:
-            self.x = self.fixedX
-            self.y = self.fixedY
+        # gravity
+        self.vy += gravity
+        # wind. take sin(wind + self.x/100) so softbodies do not "sway" in the wind in unison.
+        self.vx += 0.1*math.sin(wind+self.x/200)
+        # friction
+        self.vx *= self.friction
+        self.vy *= self.friction
+
+        # update current node positions
+        self.x += self.vx
+        self.y += self.vy
 
 # Spring class: connects Node objects.
 class Spring:
+    k = 0.5 # spring constant
+    damping = 0
     def __init__(self, render_surf, node1, node2, length):
         self.render_surf = render_surf
         # A spring connects two nodes.
         self.node1 = node1
         self.node2 = node2
-        # length between nodes and the width of the spring.
+        # default length between nodes and the width of the spring.
         self.length = length
         self.linewidth = 1
     
     def update(self):
-        # calculate the resistive "spring forces" needed to pull the springs back close so they don't fall infinitely (move back by offset).
-        dx = self.node2.x - self.node1.x
-        dy = self.node2.y - self.node1.y
-        distance = math.sqrt(dx**2 + dy**2)
-        difference = self.length - distance
-        percent = difference / distance / 2
-        offsetX = dx * percent
-        offsetY = dy * percent
+        dx = self.node2.x-self.node1.x
+        dy = self.node2.y-self.node1.y
+        distance = math.sqrt(dx**2+dy**2)
+        if distance == 0:
+            return
+        
+        # Hooke's law : F = -k*x
+        difference = distance-self.length
+        forceX = (dx/distance)*difference*self.k
+        forceY = (dy/distance)*difference*self.k
 
-        # pull the nodes back by directly manipulating the node's x and y positions.
-        self.node1.x -= offsetX
-        self.node1.y -= offsetY
-        self.node2.x += offsetX
-        self.node2.y += offsetY
+        # spring damping along velocity
+        if self.damping > 0:
+            forceX -= self.damping * (self.node1.vx - self.node2.vx)
+            forceY -= self.damping * (self.node1.vy - self.node2.vy)
+
+        # Apply forces to nodes
+        self.node1.apply_force(forceX, forceY)
+        self.node2.apply_force(-forceX, -forceY)
 
     # display spring
     def render(self, color):
@@ -100,8 +107,6 @@ class Polygon:
             loc = (node.x, node.y)
             node_locs.append(loc)
         return node_locs
-
-
 
 # SoftBody object: a network of nodes connected with springs.
 class SoftBody:
@@ -155,30 +160,24 @@ class SoftBody:
                             (node2.gridpos[1] - node1.gridpos[1])**2
                         )*self.spacing
                     ))
-
         self.create_polygons()
 
-    def create_polygons(self): # Using a BFS algorithm to traverse
+    # Using a BFS(breadth first search) algorithm to traverse border nodes to create polygon objects
+    def create_polygons(self):
         unseen = self.border_nodes.copy()
         while len(unseen) > 0:
             new_polygon = Polygon()
-
             frontier = [] # queue of Node objects
             #explored = [] # added to polygon
-
             first_key = next(iter(unseen))
             frontier.append(unseen.pop(first_key))
-
-            while len(frontier) > 0:
+            while len(frontier) > 0: # when len(frontier) = 0, the nodes of one connected component have all been explored. create the polygon and move onto the next component, if exists.
                 current_adjacency = self.adjacency_list[str(frontier[0].id)]['adjacency']
-
                 for i in current_adjacency:
                     if str(i) in unseen: # assuming only 1 next node connection, apart from the first node in sequence
                         frontier.append(unseen.pop(str(i)))
                         break
-
                 new_polygon.add_node(frontier.pop(0))
-
             self.polygons.append(new_polygon)
 
     # fill in SoftBody with a solid color:
@@ -192,14 +191,19 @@ class SoftBody:
             spring.render(self.color)
     # draw SoftBody's nodes
     def render_node(self):
-        for node in self.nodes:
+        for i in self.nodes:
+            node = self.nodes[i]
             node.render()
+
+    def apply_force(self, fx, fy):
+        for i in self.nodes:
+            self.nodes[i].apply_force(fx,fy)
             
     # update state of Softbody springs and nodes
-    def update(self, wind, force_x, force_y):
+    def update(self, wind, gravity):
         for spring in self.springs:
             spring.update()
         for i in self.nodes:
             node = self.nodes[i]
-            node.update(wind, force_x, force_y)
+            node.update(wind, gravity)
 

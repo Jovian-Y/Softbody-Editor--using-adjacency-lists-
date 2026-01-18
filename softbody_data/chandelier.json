@@ -1,0 +1,445 @@
+{
+  "node_data": {
+    "18": {
+      "id": 18,
+      "pos": [
+        0,
+        4
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "19": {
+      "id": 19,
+      "pos": [
+        -1,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "20": {
+      "id": 20,
+      "pos": [
+        0,
+        6
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "21": {
+      "id": 21,
+      "pos": [
+        1,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "22": {
+      "id": 22,
+      "pos": [
+        0,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "27": {
+      "id": 27,
+      "pos": [
+        0,
+        10
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "28": {
+      "id": 28,
+      "pos": [
+        -1,
+        11
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "29": {
+      "id": 29,
+      "pos": [
+        0,
+        12
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "30": {
+      "id": 30,
+      "pos": [
+        1,
+        11
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "31": {
+      "id": 31,
+      "pos": [
+        0,
+        11
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "32": {
+      "id": 32,
+      "pos": [
+        0,
+        5
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "35": {
+      "id": 35,
+      "pos": [
+        5,
+        5
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "39": {
+      "id": 39,
+      "pos": [
+        -5,
+        5
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "40": {
+      "id": 40,
+      "pos": [
+        -4,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "41": {
+      "id": 41,
+      "pos": [
+        -5,
+        4
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "42": {
+      "id": 42,
+      "pos": [
+        -6,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "43": {
+      "id": 43,
+      "pos": [
+        -5,
+        6
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "44": {
+      "id": 44,
+      "pos": [
+        5,
+        4
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "45": {
+      "id": 45,
+      "pos": [
+        4,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "46": {
+      "id": 46,
+      "pos": [
+        5,
+        6
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "47": {
+      "id": 47,
+      "pos": [
+        6,
+        5
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "71": {
+      "id": 71,
+      "pos": [
+        5,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "72": {
+      "id": 72,
+      "pos": [
+        5,
+        10
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "75": {
+      "id": 75,
+      "pos": [
+        -5,
+        10
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "76": {
+      "id": 76,
+      "pos": [
+        -5,
+        8
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "80": {
+      "id": 80,
+      "pos": [
+        0,
+        0
+      ],
+      "fixed": true,
+      "border": false
+    },
+    "81": {
+      "id": 81,
+      "pos": [
+        0,
+        2
+      ],
+      "fixed": false,
+      "border": false
+    }
+  },
+  "adjacency_list": {
+    "18": {
+      "adjacency": [
+        19,
+        21,
+        32,
+        81
+      ]
+    },
+    "19": {
+      "adjacency": [
+        18,
+        20,
+        32
+      ]
+    },
+    "20": {
+      "adjacency": [
+        19,
+        21,
+        32,
+        22
+      ]
+    },
+    "21": {
+      "adjacency": [
+        20,
+        18,
+        32,
+        35
+      ]
+    },
+    "22": {
+      "adjacency": [
+        20,
+        27
+      ]
+    },
+    "27": {
+      "adjacency": [
+        22,
+        30,
+        28,
+        31
+      ]
+    },
+    "28": {
+      "adjacency": [
+        29,
+        27,
+        31
+      ]
+    },
+    "29": {
+      "adjacency": [
+        30,
+        28,
+        31
+      ]
+    },
+    "30": {
+      "adjacency": [
+        27,
+        29,
+        31
+      ]
+    },
+    "31": {
+      "adjacency": [
+        27,
+        29,
+        28,
+        30
+      ]
+    },
+    "32": {
+      "adjacency": [
+        18,
+        20,
+        21,
+        19,
+        39
+      ]
+    },
+    "35": {
+      "adjacency": [
+        21,
+        44,
+        46,
+        47,
+        45
+      ]
+    },
+    "39": {
+      "adjacency": [
+        41,
+        43,
+        40,
+        42,
+        32
+      ]
+    },
+    "40": {
+      "adjacency": [
+        43,
+        41,
+        39
+      ]
+    },
+    "41": {
+      "adjacency": [
+        42,
+        40,
+        39,
+        80
+      ]
+    },
+    "42": {
+      "adjacency": [
+        41,
+        43,
+        39
+      ]
+    },
+    "43": {
+      "adjacency": [
+        42,
+        40,
+        39,
+        76
+      ]
+    },
+    "44": {
+      "adjacency": [
+        45,
+        47,
+        35,
+        80
+      ]
+    },
+    "45": {
+      "adjacency": [
+        44,
+        46,
+        35
+      ]
+    },
+    "46": {
+      "adjacency": [
+        45,
+        47,
+        35,
+        71
+      ]
+    },
+    "47": {
+      "adjacency": [
+        46,
+        44,
+        35
+      ]
+    },
+    "71": {
+      "adjacency": [
+        46,
+        72
+      ]
+    },
+    "72": {
+      "adjacency": [
+        71
+      ]
+    },
+    "75": {
+      "adjacency": [
+        76
+      ]
+    },
+    "76": {
+      "adjacency": [
+        43,
+        75
+      ]
+    },
+    "80": {
+      "adjacency": [
+        81,
+        41,
+        44
+      ]
+    },
+    "81": {
+      "adjacency": [
+        80,
+        18
+      ]
+    }
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "node_data": {
+    "1": {
+      "id": 1,
+      "pos": [
+        0,
+        0
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "3": {
+      "id": 3,
+      "pos": [
+        4,
+        0
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "5": {
+      "id": 5,
+      "pos": [
+        8,
+        0
+      ],
+      "fixed": true,
+      "border": true
+    },
+    "6": {
+      "id": 6,
+      "pos": [
+        7,
+        0
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "7": {
+      "id": 7,
+      "pos": [
+        5,
+        0
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "8": {
+      "id": 8,
+      "pos": [
+        3,
+        0
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "9": {
+      "id": 9,
+      "pos": [
+        1,
+        0
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "12": {
+      "id": 12,
+      "pos": [
+        0,
+        4
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "13": {
+      "id": 13,
+      "pos": [
+        0,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "14": {
+      "id": 14,
+      "pos": [
+        2,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "15": {
+      "id": 15,
+      "pos": [
+        4,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "16": {
+      "id": 16,
+      "pos": [
+        6,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "17": {
+      "id": 17,
+      "pos": [
+        8,
+        8
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "18": {
+      "id": 18,
+      "pos": [
+        8,
+        4
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "22": {
+      "id": 22,
+      "pos": [
+        2,
+        4
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "23": {
+      "id": 23,
+      "pos": [
+        4,
+        4
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "24": {
+      "id": 24,
+      "pos": [
+        6,
+        4
+      ],
+      "fixed": false,
+      "border": false
+    },
+    "25": {
+      "id": 25,
+      "pos": [
+        2,
+        0
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "26": {
+      "id": 26,
+      "pos": [
+        6,
+        0
+      ],
+      "fixed": false,
+      "border": true
+    }
+  },
+  "adjacency_list": {
+    "1": {
+      "adjacency": [
+        9,
+        12
+      ]
+    },
+    "3": {
+      "adjacency": [
+        8,
+        7,
+        23
+      ]
+    },
+    "5": {
+      "adjacency": [
+        6,
+        18
+      ]
+    },
+    "6": {
+      "adjacency": [
+        5,
+        26
+      ]
+    },
+    "7": {
+      "adjacency": [
+        3,
+        26
+      ]
+    },
+    "8": {
+      "adjacency": [
+        3,
+        25
+      ]
+    },
+    "9": {
+      "adjacency": [
+        1,
+        25
+      ]
+    },
+    "12": {
+      "adjacency": [
+        13,
+        1,
+        22
+      ]
+    },
+    "13": {
+      "adjacency": [
+        14,
+        12
+      ]
+    },
+    "14": {
+      "adjacency": [
+        15,
+        13,
+        22
+      ]
+    },
+    "15": {
+      "adjacency": [
+        16,
+        14,
+        23
+      ]
+    },
+    "16": {
+      "adjacency": [
+        17,
+        15,
+        24
+      ]
+    },
+    "17": {
+      "adjacency": [
+        18,
+        16
+      ]
+    },
+    "18": {
+      "adjacency": [
+        5,
+        17,
+        24
+      ]
+    },
+    "22": {
+      "adjacency": [
+        14,
+        23,
+        12,
+        25
+      ]
+    },
+    "23": {
+      "adjacency": [
+        15,
+        3,
+        24,
+        22
+      ]
+    },
+    "24": {
+      "adjacency": [
+        16,
+        18,
+        23,
+        26
+      ]
+    },
+    "25": {
+      "adjacency": [
+        22,
+        9,
+        8
+      ]
+    },
+    "26": {
+      "adjacency": [
+        24,
+        7,
+        6
+      ]
+    }
+  }
+}
