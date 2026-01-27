@@ -16,7 +16,7 @@ OR: only draw the spring from self to neighbor if that neighbor's ID is greater 
 DELETION OF NODE: 
 - reassign node keys NOT by size of graph (n nodes). Instead, keep, in data, a list of all keys (or just use the node_data), in numerical order (automatically sorted as new nodes are created: insert into correct location on creation).
 ----------------
-Node tracing (border cycle for polygon fill): BFS or DFS: [BFS],[explored,frontier,unseen]
+Node tracing (border cycle for polygon fill): BFS or DFS: [iterative DFS],[explored,frontier,unseen]
 
 - may be possible to have "two softbodies in one" with this approach
 - in a cycle, every node touches 2 other nodes.
@@ -35,3 +35,18 @@ for n times: (does not run if n=0)
     find a node in one unique/untouched connected component (remove that node from list, so that after 1 iteration, all nodes from that sub-graph are gone from the list)
     trace
     end current iteration when end node == start node
+
+
+---1/18/2026
+
+spring deletion:
+action=2 (spring)
+
+to delete spring connecting 2 nodes:
+    action must = 2 (spring)
+    right click 1 node, drag mouse, release on other node
+    remove from data
+
+1/20/2026
+
+not BFS: more like iterative DFS: Non-recursive polygon boundary traversal, using a queue.

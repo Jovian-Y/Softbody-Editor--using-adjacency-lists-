@@ -1,0 +1,51 @@
+{
+  "node_data": {
+    "8": {
+      "id": 8,
+      "pos": [
+        3,
+        4
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "10": {
+      "id": 10,
+      "pos": [
+        0,
+        0
+      ],
+      "fixed": false,
+      "border": true
+    },
+    "11": {
+      "id": 11,
+      "pos": [
+        -3,
+        4
+      ],
+      "fixed": false,
+      "border": true
+    }
+  },
+  "adjacency_list": {
+    "8": {
+      "adjacency": [
+        "10",
+        "11"
+      ]
+    },
+    "10": {
+      "adjacency": [
+        "8",
+        "11"
+      ]
+    },
+    "11": {
+      "adjacency": [
+        "10",
+        "8"
+      ]
+    }
+  }
+}

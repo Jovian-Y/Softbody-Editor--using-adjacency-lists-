@@ -30,6 +30,20 @@ class Node:
         self.x += fx
         self.y += fy
 
+    def apply_boundaries(self):
+        self.x = max(0, self.x)
+        self.x = min(self.render_surf.get_width(), self.x)
+
+        self.y = max(0, self.y)
+        self.y = min(self.render_surf.get_height(), self.y)
+
+    def apply_wind(self, wind):
+        # take sin(wind + self.x/100) so softbodies do not "sway" in the wind in unison.
+        if wind !=0: self.x += abs(0.1*math.sin(wind+self.x/200))
+
+    def apply_gravity(self, gravity):
+        if gravity !=0: self.y += gravity
+
     # updates node velocity as a response to force, and positions as a result.
     def update(self, wind, gravity):
         # if the nodes is a fixed node, fix its position at its point of initialization.
@@ -45,10 +59,15 @@ class Node:
             self.oldX = self.x
             self.oldY = self.y
 
+            # wind, gravity
+            self.apply_wind(wind)
+            self.apply_gravity(gravity)
+
             # update current node positions
-            # take sin(wind + self.x/100) so softbodies do not "sway" in the wind in unison.
-            self.x += vx + abs(0.1*math.sin(wind+self.x/200))
-            self.y += vy + gravity
+            self.x += vx
+            self.y += vy
+
+        self.apply_boundaries()
 
 # Spring class: connects Node objects.
 class Spring:
@@ -59,24 +78,25 @@ class Spring:
         self.node1 = node1
         self.node2 = node2
         # default length between nodes and the width of the spring.
-        self.length = length
+        self.default_length = length
         self.linewidth = 1
-    
+
     def update(self):
         # calculate the resistive "spring forces" needed to pull the springs back close so they don't fall infinitely (move back by offset).
-        dx = self.node2.x - self.node1.x # +, -
-        dy = self.node2.y - self.node1.y
-        distance = math.sqrt(dx**2 + dy**2)
-        difference = self.length - distance
-        ratio = difference / distance
-        offsetX = dx * ratio * Spring.stiffness
-        offsetY = dy * ratio * Spring.stiffness
+        distance_x = self.node2.x - self.node1.x
+        distance_y = self.node2.y - self.node1.y
+        distance = math.sqrt(distance_x**2 + distance_y**2)
+        if distance == 0:
+            return
 
-        # pull the nodes back by directly manipulating the node's x and y positions.
-        self.node1.x -= offsetX
-        self.node1.y -= offsetY
-        self.node2.x += offsetX
-        self.node2.y += offsetY
+        error = distance - self.default_length # positive or negative, influences direction of force
+        force = error*Spring.stiffness
+
+        fx = force*(distance_x/distance) # scales with dx, dy. divide by distance to "normalize"
+        fy = force*(distance_y/distance)
+
+        self.node1.apply_force( fx,  fy)
+        self.node2.apply_force(-fx, -fy)
 
     # display spring
     def render(self, color):
@@ -153,16 +173,15 @@ class SoftBody:
                     ))
         self.create_polygons()
 
-    # Using a BFS(breadth first search) algorithm to traverse border nodes to create polygon objects
+    # Using an iterative DFS-like algorithm to traverse border nodes to create polygon objects.
     def create_polygons(self):
         unseen = self.border_nodes.copy()
         while len(unseen) > 0:
             new_polygon = Polygon()
             frontier = [] # queue of Node objects
-            #explored = [] # added to polygon
             first_key = next(iter(unseen))
             frontier.append(unseen.pop(first_key))
-            while len(frontier) > 0: # when len(frontier) = 0, the nodes of one connected component have all been explored. create the polygon and move onto the next component, if exists.
+            while len(frontier) > 0: # when len(frontier) = 0, the nodes of one polygon have all been explored. create the polygon and move onto the next, if exists.
                 current_adjacency = self.adjacency_list[str(frontier[0].id)]['adjacency']
                 for i in current_adjacency:
                     if str(i) in unseen: # assuming only 1 next node connection, apart from the first node in sequence

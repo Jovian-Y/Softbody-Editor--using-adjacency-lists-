@@ -1,8 +1,10 @@
-import sys
+import sys, math
 import pygame
 from pygame.locals import *
 
 # switch between force based springs and distance based spring physics here.
+
+#  !!!  force based softbody NOT recommended. When too much force applied, may cause jittery behavior, and overflow error when without boundaries.
 #from softbody_force_based import SoftBody
 from softbody_position_based import SoftBody
 
@@ -51,10 +53,16 @@ softbodies.append(SoftBody(display, (210,200), 5,(0,100,200), "softbody_data/cen
 softbodies.append(SoftBody(display, (255,200), 3,(50,0,200), "softbody_data/components1.json"))
 softbodies.append(SoftBody(display, (320,200), 3,(200,0,200), "softbody_data/components2.json"))
 
+# unfixed objects
+softbodies.append(SoftBody(display, (350,200), 10,(255,255,255), "softbody_data/ball.json"))
+softbodies.append(SoftBody(display, (350,200), 10,(20,20,20), "softbody_data/triangle.json"))
+
 # external forces, universal gravity
 wind = 0    
 gravity = 0.1
-force = {"x": 0, "y": 0}
+force = {"x": 0, "y": 0, "w": True, "g": True}
+
+color = {0: (255,0,0), 1: (0,255,0)}
 
 # text
 font = pygame.font.Font(None, 25)
@@ -107,6 +115,11 @@ while True:
             if event.key == pygame.K_3:
                 do_render['fill'] = not do_render['fill']
 
+            # toggle wind, gravity
+            if event.key == pygame.K_9:
+                force['w'] = not force['w']
+            if event.key == pygame.K_0:
+                force['g'] = not force['g']
 
     # rendering
     display.fill((10,10,20))
@@ -114,7 +127,7 @@ while True:
     # update all softbodies
     for s in softbodies:
         s.apply_force(force['x'], force['y'])
-        s.update(wind, gravity)
+        s.update(wind*force['w'], gravity*force['g'])
         # toggle these three on/off for fun
         # ----------
         if do_render['fill'] == True:
@@ -132,6 +145,17 @@ while True:
     display.blit(font.render(f"1: node: {do_render['node']}", False, (255,150,100)), (10,10))
     display.blit(font.render(f"2: spring: {do_render['spring']}", False, (255,150,100)), (10,30))
     display.blit(font.render(f"3: fill: {do_render['fill']}", False, (255,150,100)), (10,50))
+
+    # wind and gravity toggle
+    display.blit(font.render(f"9: wind: {force['w']}", False, color[force['w']]), (10,display.get_height()-70))
+    display.blit(font.render(f"0: gravity: {force['g']}", False, color[force['g']]), (10,display.get_height()-50))
+    # net force
+    force_x = force['x']
+    force_y = force['y']
+    if force['w']: force_x += abs(0.1*math.sin(wind))
+    if force['g']: force_y += gravity
+
+    display.blit(font.render(f"net force (x,y): {force_x:.2f}(x), {force_y:.2f}(y)",False,(255, 255, 255)),(10, display.get_height()-30))
 
     # ---
     screen.blit(pygame.transform.scale(display, (screen.get_width(), screen.get_height())), (0,0))

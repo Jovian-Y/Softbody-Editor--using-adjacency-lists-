@@ -14,15 +14,15 @@ display_height = display_info.current_h
 aspect_ratio = display_width / display_height
 
 # internal game resolution
-display_mode = (int(aspect_ratio * 360), 360)
+display_mode = (int(aspect_ratio*360),360)
 display = pygame.Surface(display_mode)
 pygame.display.set_caption("SOFTBODY EDITOR (using adjacency list)")
 
-screen_mode = (int(aspect_ratio * display_height / 2), int(display_height / 2))
+screen_mode = (int(aspect_ratio*display_height/2),int(display_height/2))
 screen = pygame.display.set_mode(screen_mode, pygame.RESIZABLE)
 
 # ----------------- FILE PATH ----------------- #
-file_name = "cloth3"
+file_name = "triangle"
 file_path = f"softbody_data/{file_name}.json"
 
 # Grid class: creating and updating a Grid object will render a grid onto the display.
@@ -128,6 +128,10 @@ class Editor:
             softbody_data = json.load(f)
         self.node_data = softbody_data['node_data']
         self.adjacency_list = softbody_data['adjacency_list']
+        # ensure adjacency lists contain strings and remove dangling references
+        for i in self.adjacency_list:
+            adj = self.adjacency_list[i]['adjacency']
+            self.adjacency_list[i]['adjacency'] = [str(x) for x in adj if str(x) in self.node_data]
 
     def load_data(self):
         # load in data if path already exists
@@ -173,7 +177,7 @@ class Editor:
         for i in self.adjacency_list:
             id_list = self.adjacency_list[i]['adjacency']
             for node_id in id_list:
-                #if int(node_id) > int(i): # prevents duplicate springs
+                if int(node_id) > int(i): # prevents duplicate springs
                     node1_pos = self.node_data[str(i)]['pos']
                     node2_pos = self.node_data[str(node_id)]['pos']
                     pygame.draw.line(display, (150,100,255), (self.tile_size*node1_pos[0]-offset[0], self.tile_size*node1_pos[1]-offset[1]), (self.tile_size*node2_pos[0]-offset[0], self.tile_size*node2_pos[1]-offset[1]), 2)
@@ -219,7 +223,14 @@ class Editor:
             if self.hold_spring == False and self.left_clicking and self.action == 'spring' and (self.mouse_grid_pos == node['pos']):
                 self.hold_spring = True
                 self.connect[0] = node['id']
-                print(node['id'])
+
+    # remove a spring between two nodes
+    def remove_spring(self):
+        for pos in self.node_data:
+            node = self.node_data[pos]
+            if self.hold_spring == False and self.right_clicking and self.action == 'spring' and (self.mouse_grid_pos == node['pos']):
+                self.hold_spring = True
+                self.connect[0] = node['id']
 
     # main loop
     def main(self):
@@ -277,11 +288,12 @@ class Editor:
             display.blit(self.font.render(file_name, False, (255,255,255)), (10,display.get_height() - 50))
             display.blit(self.font.render("save: p", False, (255,255,255)), (10,display.get_height() - 30))
 
-# node: adding and removing
+# node: add and remove
             self.add_node()
             self.remove_node()
-# spring: add
+# spring: add and remove
             self.add_spring()
+            self.remove_spring()
             
             # eventhandler
             self.prev_left_clicking = self.left_clicking
@@ -318,7 +330,21 @@ class Editor:
 
                     if event.button == 3:
                         self.right_clicking = False
-    
+                        for pos in self.node_data:
+                            node = self.node_data[pos]
+                            # on mousebutton UP, add spring to data
+                            if self.hold_spring == True and self.action == 'spring' and (self.mouse_grid_pos == node['pos']):
+                                self.connect[1] = node['id']
+                                a = str(self.connect[0])
+                                b = str(self.connect[1])
+                                # delete
+                                self.adjacency_list[a]['adjacency'].remove(b) if b in self.adjacency_list[a]['adjacency'] else None
+                                self.adjacency_list[b]['adjacency'].remove(a) if a in self.adjacency_list[b]['adjacency'] else None
+
+                                # reset
+                                self.connect = [None, None]
+                                self.hold_spring = False
+
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                         self.movement[0] = True

@@ -1,3 +1,6 @@
+# this implementation may cause overflow error with too much force, when without bounds.
+# position based physics body recommended.
+
 import pygame
 import math, json
 
@@ -34,15 +37,29 @@ class Node:
         self.vx += fx/Node.mass
         self.vy += fy/Node.mass
 
+    def apply_boundaries(self):
+        self.x = max(0, self.x)
+        self.x = min(self.render_surf.get_width(), self.x)
+
+        self.y = max(0, self.y)
+        self.y = min(self.render_surf.get_height(), self.y)
+
+    def apply_wind(self, wind):
+        # take sin(wind + self.x/100) so softbodies do not "sway" in the wind in unison.
+        if wind !=0: self.vx += abs(0.1*math.sin(wind+self.x/200))
+
+    def apply_gravity(self, gravity):
+        if gravity !=0: self.vy += gravity
+
     # updates node velocity as a response to force, and positions as a result.
     def update(self, wind, gravity):
         if self.fixed:
             return
         
-        # gravity
-        self.vy += gravity
-        # wind. take sin(wind + self.x/100) so softbodies do not "sway" in the wind in unison.
-        self.vx += 0.1*math.sin(wind+self.x/200)
+        # wind, gravity
+        self.apply_wind(wind)
+        self.apply_gravity(gravity)
+
         # friction
         self.vx *= Node.friction
         self.vy *= Node.friction
@@ -50,6 +67,8 @@ class Node:
         # update current node positions
         self.x += self.vx
         self.y += self.vy
+
+        self.apply_boundaries()
 
 # Spring class: connects Node objects.
 class Spring:
@@ -71,9 +90,9 @@ class Spring:
             return
         
         # Hooke's law : F = -k*x
-        difference = distance-self.length
-        forceX = (dx/distance)*difference*Spring.k
-        forceY = (dy/distance)*difference*Spring.k
+        displacement = distance-self.length
+        forceX = Spring.k*(displacement*(dx/distance)) # cosine 
+        forceY = Spring.k*(displacement*(dy/distance)) # sine
 
         # Apply forces to nodes
         self.node1.apply_force(forceX, forceY)
@@ -153,13 +172,12 @@ class SoftBody:
                     ))
         self.create_polygons()
 
-    # Using a BFS(breadth first search) algorithm to traverse border nodes to create polygon objects
+    # Using an iterative DFS-like algorithm to traverse border nodes to create polygon objects.
     def create_polygons(self):
         unseen = self.border_nodes.copy()
         while len(unseen) > 0:
             new_polygon = Polygon()
             frontier = [] # queue of Node objects
-            #explored = [] # added to polygon
             first_key = next(iter(unseen))
             frontier.append(unseen.pop(first_key))
             while len(frontier) > 0: # when len(frontier) = 0, the nodes of one connected component have all been explored. create the polygon and move onto the next component, if exists.
