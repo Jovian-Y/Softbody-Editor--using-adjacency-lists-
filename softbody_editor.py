@@ -1,6 +1,5 @@
 import pygame
 import sys, os, math, json
-from utils import collidePoint
 
 # initialize, clock
 pygame.init()
@@ -22,7 +21,7 @@ screen_mode = (int(aspect_ratio*display_height/2),int(display_height/2))
 screen = pygame.display.set_mode(screen_mode, pygame.RESIZABLE)
 
 # ----------------- FILE PATH ----------------- #
-file_name = "triangle"
+file_name = "beans"
 file_path = f"softbody_data/{file_name}.json"
 
 # Grid class: creating and updating a Grid object will render a grid onto the display.

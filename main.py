@@ -2,11 +2,7 @@ import sys, math
 import pygame
 from pygame.locals import *
 
-# switch between force based springs and distance based spring physics here.
-
-#  !!!  force based softbody NOT recommended. When too much force applied, may cause jittery behavior, and overflow error when without boundaries.
-#from softbody_force_based import SoftBody
-from softbody_position_based import SoftBody
+from softbody import SoftBody
 
 # initialize, clock
 pygame.init()
@@ -17,13 +13,13 @@ FPS = 60
 display_info = pygame.display.Info()
 display_width = display_info.current_w
 display_height = display_info.current_h
-aspect_ratio = display_width / display_height
+aspect_ratio = display_width/display_height
 
-screen_mode = (int(aspect_ratio * display_height / 2), int(display_height / 2))
+screen_mode = (int(aspect_ratio*display_height/2), int(display_height/2))
 screen = pygame.display.set_mode(screen_mode, pygame.RESIZABLE)
 
 # internal game resolution
-display_mode = (int(aspect_ratio * 312), 312)
+display_mode = (int(aspect_ratio*312), 312)
 display = pygame.Surface(display_mode)
 pygame.display.set_caption("SOFTBODY EDITOR")
 
@@ -53,9 +49,10 @@ softbodies.append(SoftBody(display, (210,200), 5,(0,100,200), "softbody_data/cen
 softbodies.append(SoftBody(display, (255,200), 3,(50,0,200), "softbody_data/components1.json"))
 softbodies.append(SoftBody(display, (320,200), 3,(200,0,200), "softbody_data/components2.json"))
 
-# unfixed objects
-softbodies.append(SoftBody(display, (350,200), 10,(255,255,255), "softbody_data/ball.json"))
-softbodies.append(SoftBody(display, (350,200), 10,(20,20,20), "softbody_data/triangle.json"))
+# unfixed objects: ball, triangle, beans
+softbodies.append(SoftBody(display, (150,200), 10,(255,255,255), "softbody_data/ball.json"))
+softbodies.append(SoftBody(display, (250,200), 7,(50,50,50), "softbody_data/triangle.json"))
+softbodies.append(SoftBody(display, (350,200), 7,(50,255,150), "softbody_data/beans.json"))
 
 # external forces, universal gravity
 wind = 0    

@@ -2,7 +2,7 @@
 A simple softbody editor featuring a softbody object system composed of a network of nodes and springs, allowing simulation of dynamic game entities with realistic deformation.
 
 ## NEW Features and Improvements
-- Data storage: from edge-list representation to adjacency lists. This is done so that an iterative DFS algorithm can be applied for boundary traversal and to identify connected components, allowing for multiple polygons to be traced from the node data in a single softbody data file. Also allows for border node creation in any order within the editor, as opposed to order dependent polygon tracing previously: "zigzag" filling is no longer a major issue (though it may still occur in cases of improper node and edge placement).
+- Data storage: from edge-list representation to adjacency lists. This is done so that an iterative DFS algorithm can be applied to traverse boundaries and to identify connected components, allowing for multiple polygons to be traced from a single softbody data file. Also allows for border node creation in any order within the editor, as opposed to order dependent polygon tracing previously: "zigzag" filling is no longer a major issue (though it may still occur in cases of improper node and edge placement).
 
 ## softbody_editor.py
 ### Features
@@ -35,7 +35,6 @@ A simple softbody editor featuring a softbody object system composed of a networ
     - 1: node
     - 2: spring
     - 3: fill
-- option to switch between force/distance based physics (separate modules for both). Force based implementation may cause overflow error if too much force is applied, so distance based is recommended.
 
 ### Instructions
 to add softbody from data:
