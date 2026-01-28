@@ -38,7 +38,7 @@ class Node:
         self.y = min(self.render_surf.get_height(), self.y)
 
     def apply_wind(self, wind):
-        # take sin(wind + self.x/100) so softbodies do not "sway" in the wind in unison.
+        # take sin(wind + self.x/200) so softbodies do not "sway" in the wind in unison.
         if wind !=0: self.x += abs(0.1*math.sin(wind+self.x/200))
 
     def apply_gravity(self, gravity):

@@ -287,10 +287,10 @@ class Editor:
             display.blit(self.font.render(file_name, False, (255,255,255)), (10,display.get_height() - 50))
             display.blit(self.font.render("save: p", False, (255,255,255)), (10,display.get_height() - 30))
 
-# node: add and remove
+            # node: add and remove
             self.add_node()
             self.remove_node()
-# spring: add and remove
+            # spring: add and remove
             self.add_spring()
             self.remove_spring()
             
