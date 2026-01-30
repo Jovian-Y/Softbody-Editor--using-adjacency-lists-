@@ -257,7 +257,7 @@ class Editor:
             self.scroll[1] += (self.movement[3] - self.movement[2])*self.scroll_factor
             self.scroll = list(self.scroll)
 
-# rendering
+            # rendering
             # reset display
             display.fill((10,10,20))
             # rendering reference lines and points and nodes/springs
@@ -382,7 +382,7 @@ class Editor:
                     if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                         self.movement[3] = False
                         
-            # rendering
+            # pygame update
             screen.blit(pygame.transform.scale(display, (screen.get_width(), screen.get_height())), (0,0))
             pygame.display.update()
             clock.tick(FPS)
