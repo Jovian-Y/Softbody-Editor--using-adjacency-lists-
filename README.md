@@ -1,8 +1,8 @@
 # Softbody Editor
-A simple softbody editor featuring a softbody object system composed of a network of nodes and springs, allowing simulation of dynamic game entities with realistic deformation.
+A simple softbody editor featuring a softbody object system composed of a network of nodes and springs, allowing simulation of dynamic game entities with realistic deformation, as well as a wide range of other physical phenomena.
 
 ## NEW Features and Improvements
-- Data storage: from edge list representation to adjacency lists. This is done so that an iterative DFS algorithm can be applied to traverse boundaries and to identify connected components, allowing for multiple polygons to be traced from a single softbody data file. Also allows for border node creation in any order within the editor, as opposed to order dependent polygon tracing previously: "zigzag" filling is no longer a major issue (though it may still occur in cases of improper node and edge placement).
+- Data storage: from edge list representation to adjacency lists. This is done so that an iterative graph traversal algorithm can be applied to identify connected components, allowing for multiple polygons to be traced from a single softbody data file. Also allows for border node creation in any order within the editor, as opposed to order dependent polygon tracing previously: "zigzag" filling is no longer a major issue (though it may still occur in cases of improper node and edge placement).
 
 ## softbody_editor.py
 ### Features
@@ -10,11 +10,11 @@ A simple softbody editor featuring a softbody object system composed of a networ
 - Softbody data saving in JSON format.
 - SoftBody object: consists of configuration(s) of connected nodes and springs.
 - Can mimic "soft body" behavior through creating a sparse network of nodes and springs. e.g., cloth, vine, spider web, net, hanging mobile.
-- Can mimic stiff "rigid body" behavior through triangular node connections or compact node connections. e.g., ball, bridge.
+- Can mimic stiff "rigid body" behavior through triangular node connections. e.g., ball, bridge.
 - Grid lines.
 
 ### Instructions
-- To make new softbody data, in [softbody_editor.py] code, choose a file name inside file path. If nonexistent, a new JSON file will be created automatically. If the file name exists already, running the editor will load in the already existing data.
+- To make new softbody data, in [softbody_editor.py] code, choose a file name inside file path. If nonexistent, a new JSON file will be created automatically on program execution. If the file name exists already, running the editor will load in the already existing data.
 - WASD or arrow keys to move the camera.
 - actions:
   - 1: action = node. Click left mouse button to place a node at cursor's grid position. Nodes can be border and/or fixed (or none). Right click a node to delete the node.
@@ -22,6 +22,7 @@ A simple softbody editor featuring a softbody object system composed of a networ
   - 3: toggle fixed on/off. Nodes placed when fixed is true will be labeled with "F" (fixed).
     - Fixed nodes are not affected by wind, gravity, or any other external force. Remains in the position in which they are initialized.
   - 4: toggle border on/off. Nodes placed when border is true will be labeled with "B" (border).
+    - Border nodes must form a cycle through spring (edge) connections. There may be multiple cycles, and thus multiple connected components. Border nodes are borders for polygon tracing and filling.
 - p: save current map.
 
 ## main.py (game)
@@ -55,5 +56,5 @@ softbodies.append(SoftBody(display, (10,10), 7, (100,20,255), "softbody_data/clo
 ```
 
 ## IMPORTANT
-- For filled polygons, All BORDER NODES must be a member of a closed loop. The start and end node does not matter, as long as it forms a closed loop connected by springs.
-- To minimize rendering errors, do not DIRECTLY connect two BORDER nodes from different connected components with a spring. If they must be connected, it is best to create an intermediate NON-BORDER node.
+- For filled polygons, All BORDER NODES must be a member of a loop (closed). The start and end node does not matter, as long as it forms a loop connected by springs.
+- To minimize rendering errors, do not DIRECTLY connect two BORDER nodes from different connected components with a spring. If they must be connected, it is best to create an intermediate NON-BORDER node, to differentiate between distinct connected components.

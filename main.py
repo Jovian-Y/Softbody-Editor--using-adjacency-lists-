@@ -26,6 +26,7 @@ pygame.display.set_caption("SOFTBODY EDITOR")
 # collection of SoftBody objects
 softbodies = []
 
+# in practice, don't do it like this:
 # cloth-like SoftBodies
 softbodies.append(SoftBody(display, (10,10), 7, (100,20,255), "softbody_data/cloth1.json"))
 softbodies.append(SoftBody(display, (70,10), 7, (255,255,200), "softbody_data/cloth2.json"))
@@ -48,11 +49,13 @@ softbodies.append(SoftBody(display, (150,200), 7,(114,116,255), "softbody_data/c
 softbodies.append(SoftBody(display, (210,200), 5,(0,100,200), "softbody_data/centered.json"))
 softbodies.append(SoftBody(display, (255,200), 3,(50,0,200), "softbody_data/components1.json"))
 softbodies.append(SoftBody(display, (320,200), 3,(200,0,200), "softbody_data/components2.json"))
-
 # unfixed objects: ball, triangle, beans
 softbodies.append(SoftBody(display, (150,200), 10,(255,255,255), "softbody_data/ball.json"))
 softbodies.append(SoftBody(display, (250,200), 7,(50,50,50), "softbody_data/triangle.json"))
 softbodies.append(SoftBody(display, (350,200), 7,(50,255,150), "softbody_data/beans.json"))
+
+#softbodies.append(SoftBody(display, (150,100), 20, (255,0,0), "softbody_data/youtube.json"))
+#softbodies.append(SoftBody(display, (250, 165), 20, (255,255,255), "softbody_data/arrow.json"))
 
 # external forces, universal gravity
 wind = 0    

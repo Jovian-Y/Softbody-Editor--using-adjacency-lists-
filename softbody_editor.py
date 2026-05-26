@@ -21,7 +21,7 @@ screen_mode = (int(aspect_ratio*display_height/2),int(display_height/2))
 screen = pygame.display.set_mode(screen_mode, pygame.RESIZABLE)
 
 # ----------------- FILE PATH ----------------- #
-file_name = "beans"
+file_name = "cloth2"
 file_path = f"softbody_data/{file_name}.json"
 
 # Grid class: creating and updating a Grid object will render a grid onto the display.
@@ -315,7 +315,7 @@ class Editor:
                             # on mousebutton UP, add spring to data
                             if self.hold_spring == True and self.action == 'spring' and (self.mouse_grid_pos == node['pos']):
                                 self.connect[1] = node['id']
-                                #print(self.adjacency_list)
+                                print(self.adjacency_list)
                                 # cannot easily make adjacency lists sets instead: we don't want duplicate items in list, but JSON does not have sets. Just check if duplicate instead.
                                 a = str(self.connect[0])
                                 b = str(self.connect[1])
