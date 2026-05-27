@@ -315,7 +315,7 @@ class Editor:
                             # on mousebutton UP, add spring to data
                             if self.hold_spring == True and self.action == 'spring' and (self.mouse_grid_pos == node['pos']):
                                 self.connect[1] = node['id']
-                                print(self.adjacency_list)
+                                #print(self.adjacency_list)
                                 # cannot easily make adjacency lists sets instead: we don't want duplicate items in list, but JSON does not have sets. Just check if duplicate instead.
                                 a = str(self.connect[0])
                                 b = str(self.connect[1])
