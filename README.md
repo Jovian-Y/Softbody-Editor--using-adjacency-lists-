@@ -1,7 +1,7 @@
 # Softbody Editor
 - A simple softbody editor featuring a softbody object system composed of a network of nodes and springs, allowing simulation of dynamic game entities with realistic deformation, as well as a wide range of other physical phenomena.
 
-[![Watch the video on YouTube](https://youtu.be/A89DAXf6Vqg/hqdefault.jpg)](https://youtu.be/A89DAXf6Vqg)
+[![Watch the video on YouTube](https://img.youtube.com/vi/A89DAXf6Vqg/maxresdefault.jpg)](https://youtu.be/A89DAXf6Vqg)
 
 ## NEW Features and Improvements
 - Data storage: from edge list representation to adjacency lists. This is done so that an iterative graph traversal algorithm can be applied to identify connected components, allowing for multiple polygons to be traced from a single softbody data file. Also allows for border node creation in any order within the editor, as opposed to order dependent polygon tracing previously: "zigzag" filling is no longer a major issue (though it may still occur in cases of improper node and edge placement).
