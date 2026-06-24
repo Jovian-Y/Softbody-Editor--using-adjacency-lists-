@@ -282,7 +282,7 @@ class Editor:
             display.blit(self.font.render(f"1;2: action: {self.action}", False, (255, 150, 100)), (10,10))
             display.blit(self.font.render(f"3: fixed: {str(self.is_fixed)}", False, (255, 0, 0)), (10,30))
             display.blit(self.font.render(f"4: border: {str(self.is_border)}", False, (0, 255, 0)), (10,50))
-            display.blit(self.font.render(f"coordiantes: {str(self.mouse_grid_pos)}", False, (255,255,255)), (10,70))
+            display.blit(self.font.render(f"coordinates: {str(self.mouse_grid_pos)}", False, (255,255,255)), (10,70))
             #
             display.blit(self.font.render(file_name, False, (255,255,255)), (10,display.get_height() - 50))
             display.blit(self.font.render("save: p", False, (255,255,255)), (10,display.get_height() - 30))
